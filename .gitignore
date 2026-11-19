@@ -63,3 +63,6 @@ scheduled_tasks.lock
 
 # GitLab Pages output — badges generated fresh by the `pages` CI job
 /public/
+
+# Vercel CLI
+.vercel
