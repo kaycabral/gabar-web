@@ -1,0 +1,19 @@
+# Ephemeral Postgres for local dev and the @gabar/db Postgres integration suite
+# (`pnpm --filter @gabar/web db:start`). No named volume: a fresh `up` starts empty.
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-gabar}
+    ports:
+      - '${POSTGRES_PORT:-5432}:5432'
+    mem_limit: 1g
+    memswap_limit: 1g
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+      start_period: 2s

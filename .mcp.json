@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "next-gabar-web": {
+      "type": "http",
+      "url": "http://localhost:3004/_next/mcp"
+    }
+  }
+}

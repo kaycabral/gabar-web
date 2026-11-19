@@ -1,0 +1,10 @@
+// Root ESLint config: picked up by workspaces without their own eslint.config.mjs
+// (each still runs `eslint .` from its own dir, with its own eslint-suppressions.json).
+import baseConfig from '@cbrl/eslint-config'
+
+export default [
+  ...baseConfig,
+  {
+    ignores: ['.husky/**'],
+  },
+]

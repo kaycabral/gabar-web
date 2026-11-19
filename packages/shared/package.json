@@ -1,0 +1,19 @@
+{
+  "name": "@gabar/shared",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@cbrl/tsconfig": "^0.1.0",
+    "vitest": "catalog:"
+  }
+}
