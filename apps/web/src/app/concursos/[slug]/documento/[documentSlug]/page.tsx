@@ -1,5 +1,5 @@
-import { Skeleton } from '@/components/ui/skeleton'
 import { getDocumentBySlug, getExamBySlug } from '@/lib/exams-api'
+import { Skeleton } from '@cbrl/design'
 import { AlertTriangleIcon, ChevronLeftIcon } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'

@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@cbrl/design'
 
 export function AlertsCTA() {
   return (
@@ -32,10 +32,9 @@ export function AlertsCTA() {
       <div className="relative flex flex-col items-start gap-3 lg:items-end">
         <Button
           type="button"
-          variant="accent"
           size="lg"
           disabled
-          className="h-auto gap-2.5 rounded-full px-7 py-4 text-[15px] font-semibold tracking-[-0.01em]"
+          className="bg-accent-brand text-accent-brand-foreground h-auto gap-2.5 rounded-full px-7 py-4 text-[15px] font-semibold tracking-[-0.01em]"
         >
           Configurar alertas
           <ArrowRight className="size-4" />

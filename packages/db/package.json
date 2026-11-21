@@ -17,8 +17,8 @@
     "db:seed:dev": "tsx scripts/seed-dev.ts"
   },
   "dependencies": {
-    "@cbrl/env": "^0.1.0",
-    "@cbrl/pg": "^0.2.0",
+    "@cbrl/env": "^0.1.1",
+    "@cbrl/pg": "^0.3.0",
     "@gabar/shared": "workspace:*",
     "drizzle-orm": "catalog:",
     "pg": "catalog:"

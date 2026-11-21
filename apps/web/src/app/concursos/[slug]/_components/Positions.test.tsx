@@ -117,7 +117,7 @@ describe('Positions', () => {
     render(<Positions exam={makeExam(makePositions(10))} />)
 
     // Navigate to page 2
-    fireEvent.click(screen.getByRole('link', { name: '2' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Página 2' }))
     expect(screen.getByText('Cargo 9')).toBeInTheDocument()
 
     // Typing in search should reset to page 1
@@ -133,8 +133,8 @@ describe('Positions', () => {
   it('renders pagination when there are more than 8 positions', () => {
     render(<Positions exam={makeExam(makePositions(9))} />)
     expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '1' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: '2' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Página 1' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Página 2' })).toBeInTheDocument()
   })
 
   it('renders subject names when position has subjects', () => {
@@ -159,14 +159,14 @@ describe('Positions', () => {
     expect(screen.queryByRole('group')).not.toBeInTheDocument()
   })
 
-  it('clicking a pagination link shows the correct page of positions', () => {
+  it('clicking a pagination button shows the correct page of positions', () => {
     render(<Positions exam={makeExam(makePositions(10))} />)
 
     // Page 1: Cargo 1–8 visible
     expect(screen.getByText('Cargo 1')).toBeInTheDocument()
     expect(screen.queryByText('Cargo 9')).not.toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('link', { name: '2' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Página 2' }))
 
     // Page 2: Cargo 9–10 visible
     expect(screen.getByText('Cargo 9')).toBeInTheDocument()

@@ -1,8 +1,8 @@
 'use client'
 
 import { Eyebrow } from '@/components/Eyebrow'
-import { Tabs, TabsContent } from '@/components/ui/tabs'
 import { cn } from '@/lib/utils'
+import { Tabs, TabsContent } from '@cbrl/design'
 import type { Exam } from '@gabar/shared'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
@@ -81,7 +81,7 @@ export default function CategorySection({
         <p className="text-muted-foreground max-w-[320px] text-sm leading-relaxed">{description}</p>
       </header>
 
-      <Tabs value={active} onValueChange={handleValueChange}>
+      <Tabs value={active} onValueChange={handleValueChange} className="gap-0">
         <div className="border-border flex items-end justify-between gap-4 border-b">
           <TabsPrimitive.List
             ref={listRef}

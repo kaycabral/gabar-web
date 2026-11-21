@@ -1,5 +1,7 @@
+import { coverageBase } from '@cbrl/testing/vitest'
 import react from '@vitejs/plugin-react'
-import path from 'path'
+import { createRequire } from 'node:module'
+import path from 'node:path'
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
@@ -10,14 +12,16 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
     exclude: ['src/**/_e2e/**', 'node_modules'],
+    coverage: coverageBase(),
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      // `server-only` (Next.js) bloqueia imports em client components no
-      // build do Next, mas não tem semântica em vitest. Alias pro shim noop
-      // canônico permite testar módulos que importam server-only diretamente.
-      'server-only': path.resolve(__dirname, './vitest.server-only-shim.ts'),
+      // `server-only` guards client bundles at Next build time but throws under
+      // jsdom; tests resolve it to the shared no-op shim instead.
+      'server-only': createRequire(import.meta.url).resolve(
+        '@cbrl/testing/vitest/server-only-shim',
+      ),
     },
   },
 })

@@ -1,6 +1,5 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { runGabarMigrations } from './migrate'
-import { closeGabarDb, getGabarDb } from './pool'
+import { closeGabarDb, getGabarDb, runGabarMigrations } from './client'
 import {
   findDocumentPage,
   findExamBySlug,

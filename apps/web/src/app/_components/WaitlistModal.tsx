@@ -1,16 +1,17 @@
 'use client'
 
 import { joinWaitlist, type WaitlistState } from '@/app/actions/waitlist'
+import { DialogCloseButton } from '@/components/DialogCloseButton'
 import { Turnstile } from '@/components/Turnstile'
-import { Button } from '@/components/ui/button'
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
+  Input,
+} from '@cbrl/design'
 import { Check } from 'lucide-react'
 import Link from 'next/link'
 import { useActionState, useCallback, useEffect, useState } from 'react'
@@ -41,7 +42,11 @@ export function WaitlistModal({ open, onOpenChange }: WaitlistModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="gap-5 rounded-[24px] p-8 sm:max-w-md">
+      <DialogContent
+        showCloseButton={false}
+        className="gap-5 rounded-[24px] border p-8 text-base shadow-lg ring-0 sm:max-w-md"
+      >
+        <DialogCloseButton />
         {showSuccess ? (
           <>
             <DialogHeader className="sr-only">

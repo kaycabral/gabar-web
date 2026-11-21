@@ -6,7 +6,7 @@ Aplicação Next.js que serve a interface pública do Gabar — listagem, busca,
 
 - **Next.js 16** (App Router, cache components, partial prerendering)
 - **React 19** + TypeScript
-- **Tailwind CSS 4** + shadcn/ui (`radix-ui`)
+- **Tailwind CSS 4** + `@cbrl/design` (Radix via `radix-ui`)
 - **Postgres** (Supabase) via `@gabar/db/pg` — só leitura de concursos publicados
 - **Vitest** (unitários) + **Playwright** (E2E)
 
@@ -18,7 +18,8 @@ src/
 │   ├── (index)/              # Landing
 │   ├── concursos/            # Listagem, detalhe e documento
 │   ├── privacidade/, termos/ # Páginas legais
-│   ├── api/health/           # /api/health → { commit, revision }
+│   ├── api/health/           # /api/health → { status, commit, database }
+│   ├── api/csp-report/       # Recebe relatórios de violação de CSP
 │   └── actions/waitlist.ts   # Server action — lista de espera
 ├── components/
 └── lib/
@@ -37,6 +38,7 @@ src/
 | `/concursos/[slug]/documento/[documentSlug]` | PPR               | Texto do documento     |
 | `/concursos/categorias`                      | Static + cache    | Stats por banca/região |
 | `/api/health`                                | Dynamic route     | Smoke gate             |
+| `/api/csp-report`                            | Dynamic route     | Relatórios de CSP      |
 
 ## Configuração
 

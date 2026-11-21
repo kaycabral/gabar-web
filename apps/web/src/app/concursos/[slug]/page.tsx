@@ -1,6 +1,6 @@
 import StatusBadge from '@/components/StatusBadge'
-import { Skeleton } from '@/components/ui/skeleton'
 import { getAllExamSlugs, getExamBySlug } from '@/lib/exams-api'
+import { Skeleton } from '@cbrl/design'
 import { ChevronLeft } from 'lucide-react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'

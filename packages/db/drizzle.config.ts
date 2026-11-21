@@ -1,5 +1,4 @@
-import { requireEnv } from '@cbrl/env'
-import { stripSslParams, supabaseSsl } from '@cbrl/pg'
+import { drizzleKitCredentials } from '@cbrl/pg/drizzle'
 import { defineConfig } from 'drizzle-kit'
 
 /**
@@ -14,11 +13,7 @@ export default defineConfig({
   dialect: 'postgresql',
   schema: './src/pg/schema.ts',
   out: './drizzle',
-  dbCredentials: (() => {
-    const rawUrl = requireEnv('GABAR_DATABASE_URL')
-    const ssl = supabaseSsl(rawUrl)
-    return ssl ? { url: stripSslParams(rawUrl), ssl } : { url: rawUrl }
-  })(),
+  dbCredentials: drizzleKitCredentials('GABAR_DATABASE_URL'),
   strict: true,
   verbose: true,
 })

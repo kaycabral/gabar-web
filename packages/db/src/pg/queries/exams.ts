@@ -13,7 +13,7 @@ import {
   sql,
   type SQL,
 } from 'drizzle-orm'
-import { getGabarDb } from '../pool'
+import { getGabarDb } from '../client'
 import { documentContents, examDocuments, exams } from '../schema'
 import { byRegistrationEndDesc, hasText, hydrateExams } from './hydrate'
 

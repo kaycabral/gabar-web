@@ -1,4 +1,4 @@
-import { getGabarDb } from '../pool'
+import { getGabarDb } from '../client'
 import { waitlist } from '../schema'
 
 export type JoinWaitlistResult = 'joined' | 'already-joined'
