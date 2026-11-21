@@ -15,7 +15,7 @@ import {
 } from 'drizzle-orm'
 import { getGabarDb } from '../pool'
 import { documentContents, examDocuments, exams } from '../schema'
-import { byRegistrationEndDesc, hydrateExams } from './hydrate'
+import { byRegistrationEndDesc, hasText, hydrateExams } from './hydrate'
 
 export type ExamListSort = 'recent' | 'salary' | 'deadline'
 
@@ -34,7 +34,10 @@ export interface ExamListFilters {
 export interface DocumentPage {
   title: string
   url: string
-  markdown: string
+  /** Text kept in Postgres; null once it lives in Storage (`storagePath`). */
+  markdown: string | null
+  /** Path of the gzip text in Storage, read by the app. */
+  storagePath: string | null
   truncated: boolean
   extractedAt: string
   modelVersion: string
@@ -116,9 +119,14 @@ export async function listPublishedSlugs(): Promise<string[]> {
   return rows.flatMap((r) => (r.slug ? [r.slug] : []))
 }
 
+/** A published exam by slug; unpublished exams are not found. */
 export async function findExamBySlug(slug: string): Promise<Exam | undefined> {
   const db = getGabarDb()
-  const rows = await db.select().from(exams).where(eq(exams.slug, slug)).limit(1)
+  const rows = await db
+    .select()
+    .from(exams)
+    .where(and(eq(exams.slug, slug), eq(exams.published, true)))
+    .limit(1)
   const [exam] = await hydrateExams(db, rows)
   return exam
 }
@@ -132,6 +140,7 @@ export async function findDocumentPage(
       title: examDocuments.title,
       url: examDocuments.url,
       markdown: documentContents.markdown,
+      storagePath: documentContents.storagePath,
       truncated: documentContents.truncated,
       extractedAt: documentContents.extractedAt,
       modelVersion: documentContents.modelVersion,
@@ -139,7 +148,14 @@ export async function findDocumentPage(
     .from(examDocuments)
     .innerJoin(exams, eq(exams.id, examDocuments.examId))
     .innerJoin(documentContents, eq(documentContents.documentId, examDocuments.id))
-    .where(and(eq(exams.slug, examSlug), eq(examDocuments.slug, documentSlug)))
+    .where(
+      and(
+        eq(exams.slug, examSlug),
+        eq(exams.published, true),
+        eq(examDocuments.slug, documentSlug),
+        hasText,
+      ),
+    )
     .limit(1)
   const row = rows[0]
   if (!row) return null

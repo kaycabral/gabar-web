@@ -7,4 +7,5 @@ export const PAGE_SIZE = 12
 
 export type ExamFilters = ExamListFilters
 
-export type DocumentPageData = DocumentPage
+/** A document page with its text already read (from Postgres or Storage). */
+export type DocumentPageData = Omit<DocumentPage, 'markdown' | 'storagePath'> & { markdown: string }
