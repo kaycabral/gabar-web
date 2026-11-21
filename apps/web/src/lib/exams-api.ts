@@ -8,6 +8,7 @@ import {
   listPublishedExams,
   listPublishedSlugs,
 } from './db'
+import { readDocumentText } from './document-text'
 import { PAGE_SIZE, type DocumentPageData, type ExamFilters } from './exam-shared'
 
 // Stats/aggregation queries live in ./exam-stats; re-exported so callers keep
@@ -58,5 +59,10 @@ export async function getDocumentBySlug(
   'use cache'
   cacheLife('hours')
   if (!examSlug || !documentSlug) return null
-  return findDocumentPage(examSlug, documentSlug)
+  const page = await findDocumentPage(examSlug, documentSlug)
+  if (!page) return null
+  const text = await readDocumentText(page)
+  if (text === null) return null
+  const { storagePath: _, ...rest } = page
+  return { ...rest, markdown: text }
 }

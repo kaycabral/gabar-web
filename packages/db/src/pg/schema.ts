@@ -153,7 +153,10 @@ export const documentContents = pgTable('document_contents', {
   documentId: bigint('document_id', { mode: 'number' })
     .primaryKey()
     .references(() => examDocuments.id, { onDelete: 'cascade' }),
-  markdown: text('markdown').notNull(),
+  // Null once the text lives in Storage (`storagePath`).
+  markdown: text('markdown'),
+  // Path of the gzip text in the private document-texts bucket.
+  storagePath: text('storage_path'),
   extractedAt: timestamp('extracted_at', { withTimezone: true }).notNull(),
   modelVersion: text('model_version').notNull(),
   tokenCount: integer('token_count'),

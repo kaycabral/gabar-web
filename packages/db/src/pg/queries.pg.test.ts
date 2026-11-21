@@ -64,6 +64,17 @@ async function seedFixtures() {
         },
       },
       { title: 'Sem data', url: 'https://x/c.pdf', slug: 'sem-data' },
+      {
+        title: 'Anexo',
+        url: 'https://x/d.pdf',
+        slug: 'anexo',
+        date: '2026-10-15',
+        content: {
+          storagePath: 'documents/4.txt.gz',
+          extractedAt: new Date('2026-11-03T00:00:00Z'),
+          modelVersion: 'unpdf-test',
+        },
+      },
     ],
   })
   await seedExam(db, {
@@ -83,7 +94,19 @@ async function seedFixtures() {
     },
   })
   await seedExam(db, {
-    exam: { ...base, name: 'Rascunho não publicado', salaryLowerBound: 99000 },
+    exam: { ...base, name: 'Rascunho não publicado', slug: 'rascunho', salaryLowerBound: 99000 },
+    documents: [
+      {
+        title: 'Edital',
+        url: 'https://x/r.pdf',
+        slug: 'edital',
+        content: {
+          markdown: '# Rascunho',
+          extractedAt: new Date('2026-11-02T00:00:00Z'),
+          modelVersion: 'gemini-test',
+        },
+      },
+    ],
   })
 }
 
@@ -145,6 +168,7 @@ describe('detail', () => {
     ])
     expect(exam?.documents?.map((d) => [d.slug, d.hasContent])).toEqual([
       ['edital', true],
+      ['anexo', true],
       ['edital-a', false],
       ['sem-data', false],
     ])
@@ -155,11 +179,25 @@ describe('detail', () => {
     expect(await findExamBySlug('nope')).toBeUndefined()
   })
 
+  it('does not find an unpublished exam by slug, nor its documents', async () => {
+    expect(await findExamBySlug('rascunho')).toBeUndefined()
+    expect(await findDocumentPage('rascunho', 'edital')).toBeNull()
+  })
+
+  it('finds a document whose text lives in Storage', async () => {
+    expect(await findDocumentPage('tj-sp-escrevente', 'anexo')).toMatchObject({
+      title: 'Anexo',
+      markdown: null,
+      storagePath: 'documents/4.txt.gz',
+    })
+  })
+
   it('finds a document page only when it has content', async () => {
     expect(await findDocumentPage('tj-sp-escrevente', 'edital')).toEqual({
       title: 'Edital',
       url: 'https://x/b.pdf',
       markdown: '# Edital',
+      storagePath: null,
       truncated: false,
       extractedAt: '2026-11-02T00:00:00.000Z',
       modelVersion: 'gemini-test',

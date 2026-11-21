@@ -60,7 +60,7 @@ export async function hydrateExams(db: GabarDb, rows: ExamRow[]): Promise<Exam[]
         url: examDocuments.url,
         type: examDocuments.type,
         format: examDocuments.format,
-        hasContent: sql<boolean>`exists (select 1 from ${documentContents} where ${documentContents.documentId} = ${examDocuments.id})`,
+        hasContent: sql<boolean>`exists (select 1 from ${documentContents} where ${documentContents.documentId} = ${examDocuments.id} and ${hasText})`,
       })
       .from(examDocuments)
       .where(inArray(examDocuments.examId, ids))
@@ -105,3 +105,6 @@ export async function hydrateExams(db: GabarDb, rows: ExamRow[]): Promise<Exam[]
 
 /** `ORDER BY registration_end DESC NULLS LAST` — shared "most relevant first" order. */
 export const byRegistrationEndDesc = sql`${exams.registrationEnd} desc nulls last`
+
+/** A document content row with readable text: in Postgres or in Storage. */
+export const hasText = sql`(${documentContents.markdown} is not null or ${documentContents.storagePath} is not null)`
