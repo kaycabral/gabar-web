@@ -63,6 +63,6 @@ jobs:
         with:
           persist-credentials: false
       - uses: kaycabral/toolkit/.github/actions/setup@0dd0a4fa17c44d7ac401f8cc96bd0c4615cb56c1 # main
-      - run: pnpm --filter @gabar/db run db:migrate
-      - run: pnpm --filter @gabar/db run test:integration:pg
+      - run: pnpm db:migrate
+      - run: pnpm test:integration:pg
       - run: pnpm build
