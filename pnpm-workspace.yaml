@@ -27,7 +27,7 @@ catalog:
   lucide-react: ^1.75.0
   react-markdown: ^10.1.0
   remark-gfm: ^4.0.1
-  vitest: ^4.1.6
+  vitest: ^5.1.0
   '@vitest/coverage-v8': ^4.1.6
   '@vitejs/plugin-react': ^6.0.2
   '@playwright/test': ^1.59.1
