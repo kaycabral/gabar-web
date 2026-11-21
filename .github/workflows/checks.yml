@@ -1,0 +1,68 @@
+# Every quality gate, as one reusable pipeline. Callers own the trigger and the
+# concurrency policy: pull-request.yml (every PR) and nightly.yml (drift on an
+# unchanged main). Shared steps come from kaycabral/toolkit, pinned to a SHA.
+name: Checks
+
+on:
+  workflow_call:
+
+permissions: {}
+
+jobs:
+  static:
+    name: Static (format · lint · types)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: kaycabral/toolkit/.github/actions/setup@0dd0a4fa17c44d7ac401f8cc96bd0c4615cb56c1 # main
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+
+  unit:
+    name: Unit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: kaycabral/toolkit/.github/actions/setup@0dd0a4fa17c44d7ac401f8cc96bd0c4615cb56c1 # main
+      - run: pnpm test
+
+  # Read queries against a real, ephemeral Postgres carrying this repo's copy of
+  # the schema, then the production build.
+  integration:
+    name: Integration (Postgres) · build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: gabar
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres -d gabar"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    env:
+      GABAR_DATABASE_URL: postgres://postgres:postgres@localhost:5432/gabar
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: kaycabral/toolkit/.github/actions/setup@0dd0a4fa17c44d7ac401f8cc96bd0c4615cb56c1 # main
+      - run: pnpm --filter @gabar/db run db:migrate
+      - run: pnpm --filter @gabar/db run test:integration:pg
+      - run: pnpm build
