@@ -105,8 +105,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0(@commitlint/cli@19.8.1(@types/node@26.6.6)(typescript@6.0.3))
       '@cbrl/eslint-config':
-        specifier: ^0.1.0
-        version: 0.1.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)
+        specifier: ^0.1.1
+        version: 0.1.1(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)
       '@cbrl/prettier-config':
         specifier: ^0.1.0
         version: 0.1.0(prettier@3.10.1)(typescript@6.0.3)
@@ -199,8 +199,8 @@ importers:
         version: 1.4.0
     devDependencies:
       '@cbrl/eslint-config':
-        specifier: ^0.1.0
-        version: 0.1.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
+        specifier: ^0.1.1
+        version: 0.1.1(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
       '@cbrl/tsconfig':
         specifier: ^0.1.0
         version: 0.1.0
@@ -476,8 +476,8 @@ packages:
   '@cbrl/env@0.1.0':
     resolution: {integrity: sha512-pLkf4/2IopvzHBFEay4u//Xj6X53d5IZMg8J8j/7oiWmwysMI97yueKfGIQioYXBHbWisr35sdtSwUFI5880Cw==}
 
-  '@cbrl/eslint-config@0.1.0':
-    resolution: {integrity: sha512-dHUnyPJt5oZbchU/iHLeZm26HweNGbhM8b9yr/Y7Xc5SDl3FlASDUu95ze7XFs9aExnE7OnO4dITXlhl3faI0A==}
+  '@cbrl/eslint-config@0.1.1':
+    resolution: {integrity: sha512-pU9jzc8fLKFkVH4Yzz5wvZTAh6t3PqrjFRZBhYxaLhBHlJMyyOjOkIH96J8WlytT2U++dcjS53eDFoieKhfyrg==}
     peerDependencies:
       eslint: ^9.0.0
       typescript: '>=5.0.0 <7'
@@ -5936,7 +5936,7 @@ snapshots:
 
   '@cbrl/env@0.1.0': {}
 
-  '@cbrl/eslint-config@0.1.0(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)':
+  '@cbrl/eslint-config@0.1.1(@typescript-eslint/parser@8.73.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)':
     dependencies:
       '@eslint/js': 9.39.5
       eslint: 9.39.5(jiti@2.7.0)
@@ -5955,7 +5955,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  '@cbrl/eslint-config@0.1.0(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)':
+  '@cbrl/eslint-config@0.1.1(eslint@9.39.5(jiti@2.7.0))(typescript@6.0.3)':
     dependencies:
       '@eslint/js': 9.39.5
       eslint: 9.39.5(jiti@2.7.0)
