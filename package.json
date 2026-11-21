@@ -48,7 +48,7 @@
     "@cbrl/design": "^0.2.0",
     "@cbrl/env": "^0.1.1",
     "@cbrl/log": "^0.1.0",
-    "@cbrl/next": "^0.1.0",
+    "@cbrl/next": "^0.1.1",
     "@cbrl/pg": "^0.3.0",
     "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.1.1",
