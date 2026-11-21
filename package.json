@@ -36,7 +36,7 @@
     "@cbrl/commitlint-config": "^0.1.0",
     "@cbrl/eslint-config": "^0.2.0",
     "@cbrl/prettier-config": "^0.1.0",
-    "@commitlint/cli": "^19.8.1",
+    "@commitlint/cli": "^21.2.4",
     "eslint": "^9.39.4",
     "husky": "^9.1.7",
     "lint-staged": "^17.0.5",
