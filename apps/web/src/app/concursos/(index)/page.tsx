@@ -1,6 +1,5 @@
 import { PageContainer } from '@/components/PageContainer'
 import { PageShell } from '@/components/PageShell'
-import { Skeleton } from '@/components/ui/skeleton'
 import type { ExamFilters } from '@/lib/exams-api'
 import {
   getCities,
@@ -11,6 +10,7 @@ import {
 } from '@/lib/exams-api'
 import type { ExamSort } from '@/lib/filters'
 import { DEFAULT_SORT } from '@/lib/filters'
+import { Skeleton } from '@cbrl/design'
 import type { BrazilianRegion } from '@gabar/shared'
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'

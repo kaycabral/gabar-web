@@ -1,8 +1,5 @@
-import '@testing-library/jest-dom'
+import { installJsdomPolyfills } from '@cbrl/testing/vitest/jsdom'
+import '@testing-library/jest-dom/vitest'
 
-// Radix UI uses ResizeObserver internally; jsdom does not implement it
-global.ResizeObserver = class ResizeObserver {
-  observe() {}
-  unobserve() {}
-  disconnect() {}
-}
+// ResizeObserver, matchMedia, scrollIntoView and Pointer Capture for Radix under jsdom.
+installJsdomPolyfills()

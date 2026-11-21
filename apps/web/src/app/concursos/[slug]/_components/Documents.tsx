@@ -1,7 +1,7 @@
 'use client'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { formatShortDate } from '@/lib/date'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@cbrl/design'
 import type { DocumentType, Exam, ExamDocument } from '@gabar/shared'
 import { ExternalLinkIcon, EyeIcon, FileTextIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -115,17 +115,22 @@ export default function Documents({ exam, examSlug }: DocumentsProps) {
       {orderedTypes.length <= 1 ? (
         <DocumentList documents={exam.documents} examSlug={examSlug} />
       ) : (
-        <Tabs defaultValue={orderedTypes[0]} onValueChange={handleValueChange}>
+        <Tabs defaultValue={orderedTypes[0]} onValueChange={handleValueChange} className="gap-3">
           <TabsList
             ref={listRef}
-            className={`max-w-full scrollbar-none overflow-x-auto ${
+            className={`h-auto max-w-full scrollbar-none justify-start gap-1 overflow-x-auto ${
               orderedTypes.length > 3
                 ? '[mask-image:linear-gradient(to_right,transparent,black_0.75rem,black_calc(100%-0.75rem),transparent)]'
                 : ''
             }`}
           >
             {orderedTypes.map((type) => (
-              <TabsTrigger key={type} value={type} data-value={type}>
+              <TabsTrigger
+                key={type}
+                value={type}
+                data-value={type}
+                className="text-muted-foreground data-[state=active]:text-foreground px-3 py-1.5"
+              >
                 {TYPE_LABELS[type]}
               </TabsTrigger>
             ))}

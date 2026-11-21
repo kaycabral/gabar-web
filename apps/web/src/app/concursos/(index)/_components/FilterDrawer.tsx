@@ -1,18 +1,21 @@
 'use client'
 
 import { makeDefaultFilters } from '@/app/concursos/(index)/_hooks/useFilters'
-import {
-  SelectContent,
-  SelectItem,
-  SelectRoot,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet'
 import { Slider } from '@/components/ui/slider'
 import { REGION_LABELS, STATUS_LABELS } from '@/lib/constants'
 import type { FilterState } from '@/lib/filters'
 import { formatSalary } from '@/lib/salary'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+} from '@cbrl/design'
 import type { BrazilianRegion, ExamStatus } from '@gabar/shared'
 import { BRAZIL_REGIONS } from '@gabar/shared'
 import { X } from 'lucide-react'
@@ -79,13 +82,13 @@ function FieldSelect({ id, label, value, onChange, placeholder, options }: Field
       <label htmlFor={id} className={labelCls}>
         {label}
       </label>
-      <SelectRoot
+      <Select
         value={value ?? '_none'}
         onValueChange={(val) => onChange(val === '_none' ? undefined : val)}
       >
         <SelectTrigger
           id={id}
-          className="bg-card border-border h-auto w-full min-w-0 rounded-xl px-4 py-3.5 text-[14px] font-medium"
+          className="bg-card border-border dark:bg-card hover:bg-muted dark:hover:bg-muted w-full min-w-0 rounded-xl px-4 py-3.5 text-[14px] font-medium shadow-none data-[size=default]:h-auto"
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
@@ -97,7 +100,7 @@ function FieldSelect({ id, label, value, onChange, placeholder, options }: Field
             </SelectItem>
           ))}
         </SelectContent>
-      </SelectRoot>
+      </Select>
     </div>
   )
 }
@@ -146,7 +149,7 @@ export default function FilterDrawer({
       <SheetContent
         side="right"
         showCloseButton={false}
-        className="bg-background border-border flex w-full flex-col gap-0 overflow-hidden p-0 sm:max-w-[440px]"
+        className="bg-background border-border flex flex-col gap-0 overflow-hidden p-0 text-base data-[side=right]:w-full data-[side=right]:sm:max-w-[440px]"
       >
         <div className="flex-1 overflow-y-auto px-6 pt-7 pb-6 sm:px-9 sm:pt-9">
           <div className="flex items-start justify-between gap-4">

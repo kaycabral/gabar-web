@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import type { GabarDb } from './pool'
+import type { GabarDb } from './client'
 import { documentContents, examDocuments, examPositions, exams } from './schema'
 
 type NewExam = typeof exams.$inferInsert

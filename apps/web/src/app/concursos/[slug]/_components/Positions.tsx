@@ -6,36 +6,18 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-} from '@/components/ui/pagination'
 import { formatSalary } from '@/lib/salary'
+import { Badge, Button, Card, CardContent, Input, Pagination } from '@cbrl/design'
 import type { Exam } from '@gabar/shared'
 import { useState } from 'react'
 
 const PAGE_SIZE = 8
 
-function getPageRange(
-  current: number,
-  total: number,
-): (number | 'ellipsis-start' | 'ellipsis-end')[] {
-  if (total <= 7) return Array.from({ length: total }, (_, i) => i)
-  const range: (number | 'ellipsis-start' | 'ellipsis-end')[] = [0]
-  if (current > 2) range.push('ellipsis-start')
-  const start = Math.max(1, current - 1)
-  const end = Math.min(total - 2, current + 1)
-  for (let i = start; i <= end; i++) range.push(i)
-  if (current < total - 3) range.push('ellipsis-end')
-  range.push(total - 1)
-  return range
+const PAGINATION_LABELS = {
+  root: 'Paginação de cargos',
+  previous: 'Página anterior',
+  next: 'Próxima página',
+  page: (page: number) => `Página ${page}`,
 }
 
 interface PositionsProps {
@@ -160,30 +142,13 @@ export default function Positions({ exam }: PositionsProps) {
 
           {totalPages > 1 && (
             <div className="mt-4 border-t pt-4">
-              <Pagination className="justify-end">
-                <PaginationContent>
-                  {getPageRange(page, totalPages).map((item, i) =>
-                    item === 'ellipsis-start' || item === 'ellipsis-end' ? (
-                      <PaginationItem key={item}>
-                        <PaginationEllipsis />
-                      </PaginationItem>
-                    ) : (
-                      <PaginationItem key={i}>
-                        <PaginationLink
-                          href="#"
-                          isActive={item === page}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            setPage(item)
-                          }}
-                        >
-                          {item + 1}
-                        </PaginationLink>
-                      </PaginationItem>
-                    ),
-                  )}
-                </PaginationContent>
-              </Pagination>
+              <Pagination
+                page={page + 1}
+                pageCount={totalPages}
+                onPageChange={(next) => setPage(next - 1)}
+                labels={PAGINATION_LABELS}
+                className="justify-end"
+              />
             </div>
           )}
         </CardContent>

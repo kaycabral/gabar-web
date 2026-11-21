@@ -1,6 +1,5 @@
 import { PageContainer } from '@/components/PageContainer'
 import { PageShell } from '@/components/PageShell'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   getCategoriesStats,
   getExamCountsByBoard,
@@ -9,6 +8,7 @@ import {
   getExamsByBoard,
   getExamsByRegion,
 } from '@/lib/exams-api'
+import { Skeleton } from '@cbrl/design'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import CategoriesShell from './_components/CategoriesShell'

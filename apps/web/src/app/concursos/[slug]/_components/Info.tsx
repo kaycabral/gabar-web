@@ -1,7 +1,6 @@
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { formatRegistrationPeriod } from '@/lib/date'
 import { formatRegistrationFeeFromPositions, formatSalaryFromPositions } from '@/lib/salary'
+import { Button, Card, CardContent } from '@cbrl/design'
 import type { Exam } from '@gabar/shared'
 
 interface InfoProps {

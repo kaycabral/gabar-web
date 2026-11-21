@@ -1,17 +1,11 @@
 'use client'
 
 import { PageContainer } from '@/components/PageContainer'
-import {
-  SelectContent,
-  SelectItem,
-  SelectRoot,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { REGION_LABELS, STATUS_LABELS } from '@/lib/constants'
 import type { ExamSort, FilterState } from '@/lib/filters'
 import { SORT_LABELS } from '@/lib/filters'
 import { formatSalary } from '@/lib/salary'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@cbrl/design'
 import { X } from 'lucide-react'
 
 interface ResultsToolbarProps {
@@ -93,9 +87,9 @@ export default function ResultsToolbar({
       <span className="text-muted-foreground hidden shrink-0 text-[13px] md:inline">
         Ordenar por
       </span>
-      <SelectRoot value={filters.sort} onValueChange={(v) => onSortChange(v as ExamSort)}>
+      <Select value={filters.sort} onValueChange={(v) => onSortChange(v as ExamSort)}>
         <SelectTrigger
-          className="bg-card h-auto gap-1.5 rounded-lg px-2.5 py-1.5 text-[12.5px] font-medium sm:text-[13px]"
+          className="bg-card border-border dark:bg-card hover:bg-muted dark:hover:bg-muted gap-1.5 rounded-lg px-2.5 py-1.5 text-[12.5px] font-medium shadow-none data-[size=default]:h-auto sm:text-[13px]"
           aria-label="Ordenar por"
         >
           <SelectValue>{SORT_LABELS[filters.sort]}</SelectValue>
@@ -107,7 +101,7 @@ export default function ResultsToolbar({
             </SelectItem>
           ))}
         </SelectContent>
-      </SelectRoot>
+      </Select>
     </div>
   )
 

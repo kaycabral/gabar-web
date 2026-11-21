@@ -14,7 +14,7 @@ import {
   sql,
   type SQL,
 } from 'drizzle-orm'
-import { getGabarDb } from '../pool'
+import { getGabarDb } from '../client'
 import { exams } from '../schema'
 import { byRegistrationEndDesc, hydrateExams } from './hydrate'
 

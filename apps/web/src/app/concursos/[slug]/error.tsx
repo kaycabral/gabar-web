@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useEffect } from 'react'
+import { Suspense } from 'react'
 import BackLink from './_components/BackLink'
 
 interface ErrorProps {
@@ -8,11 +8,7 @@ interface ErrorProps {
   reset: () => void
 }
 
-export default function ExamDetailError({ error, reset }: ErrorProps) {
-  useEffect(() => {
-    console.error(error)
-  }, [error])
-
+export default function ExamDetailError({ reset }: ErrorProps) {
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 sm:px-6 lg:px-8">
       <nav aria-label="Navegação de volta" className="mb-6">

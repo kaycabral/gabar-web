@@ -1,5 +1,4 @@
-import { CardContent, Card as CardPrimitive } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { CardContent, Card as CardPrimitive, Skeleton } from '@cbrl/design'
 
 export default function CardSkeleton() {
   return (

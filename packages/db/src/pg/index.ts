@@ -1,6 +1,5 @@
 // Postgres (Supabase) entrypoint for the web app — `@gabar/db/pg`.
-export { runGabarMigrations } from './migrate'
-export { closeGabarDb, getGabarDb, pingGabarDb, type GabarDb } from './pool'
+export { closeGabarDb, getGabarDb, pingGabarDb, runGabarMigrations, type GabarDb } from './client'
 export {
   findDocumentPage,
   findExamBySlug,
