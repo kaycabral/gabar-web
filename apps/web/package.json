@@ -30,7 +30,7 @@
     "@tailwindcss/typography": "catalog:",
     "clsx": "catalog:",
     "lucide-react": "catalog:",
-    "next": "16.4.5",
+    "next": "16.4.6",
     "next-themes": "catalog:",
     "radix-ui": "catalog:",
     "react": "catalog:",
