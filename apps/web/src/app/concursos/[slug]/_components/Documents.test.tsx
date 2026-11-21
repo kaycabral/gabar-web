@@ -179,6 +179,23 @@ describe('Documents', () => {
     )
   })
 
+  it('does not render "Ver" link when the document has content but no slug', () => {
+    const exam: Exam = {
+      ...examWithDocuments,
+      documents: [
+        {
+          slug: null,
+          title: '-',
+          date: '2025-01-15',
+          url: 'https://example.com/anexo.pdf',
+          hasContent: true,
+        },
+      ],
+    }
+    render(<Documents examSlug="correios-2025" exam={exam} />)
+    expect(screen.queryByText('Ver')).not.toBeInTheDocument()
+  })
+
   it('does not render "Ver" link when document has no content', () => {
     render(<Documents examSlug="correios-2025" exam={examWithDocuments} />)
     expect(screen.queryByText('Ver')).not.toBeInTheDocument()
