@@ -1,5 +1,5 @@
-# Ephemeral Postgres for local dev and the @gabar/db Postgres integration suite
-# (`pnpm --filter @gabar/web db:start`). No named volume: a fresh `up` starts empty.
+# Ephemeral Postgres for local dev and the Postgres integration suite
+# (`pnpm db:start`). No named volume: a fresh `up` starts empty.
 services:
   postgres:
     image: postgres:17-alpine
