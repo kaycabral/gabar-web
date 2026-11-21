@@ -39,8 +39,7 @@ export function toExam(row: ExamRow): Exam {
 
 /**
  * Attach positions and documents (with `hasContent`) to a page of exams in two
- * queries total — replaces the per-exam subcollection fan-out of the Firestore
- * read path. Documents: dated first (newest first), then insertion order.
+ * queries total, instead of one query per exam. Documents: dated first (newest first), then insertion order.
  */
 export async function hydrateExams(db: GabarDb, rows: ExamRow[]): Promise<Exam[]> {
   if (rows.length === 0) return []

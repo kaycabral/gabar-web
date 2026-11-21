@@ -36,7 +36,7 @@ function emptyByRegion<T>(make: () => T): Record<BrazilianRegion, T> {
   }
 }
 
-/** Published and not closed. A NULL status counts as active (same as the Firestore path). */
+/** Published and not closed. A NULL status counts as active. */
 const isActive = and(
   eq(exams.published, true),
   or(isNull(exams.status), ne(exams.status, 'closed')),

@@ -45,18 +45,6 @@ export interface DocumentContent {
   truncated: boolean
 }
 
-export interface Article {
-  id: number
-  examId: string | null
-  slug: string
-  title: string
-  content: string
-  excerpt: string | null
-  publishedAt: string | null
-  createdAt: string
-  updatedAt: string
-}
-
 export interface Exam {
   id: string
   slug?: string | null

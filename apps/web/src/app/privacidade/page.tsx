@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: 'Política de privacidade do Gabar.',
 }
 
-const LAST_UPDATED = '2026-05-07'
+const LAST_UPDATED = '2026-11-21'
 const CONTACT_EMAIL = 'privacidade@cbrl.dev'
 
 export default function PrivacidadePage() {
@@ -56,7 +56,11 @@ export default function PrivacidadePage() {
         <p>Apenas com operadores estritamente necessários para a operação do serviço:</p>
         <ul>
           <li>
-            <strong>Google / Firebase</strong>: hospedagem e armazenamento dos seus dados.
+            <strong>Vercel</strong>: hospedagem do site.
+          </li>
+          <li>
+            <strong>Supabase</strong>: banco de dados onde fica o seu e-mail, em servidores em São
+            Paulo.
           </li>
           <li>
             <strong>Cloudflare</strong>: verificação anti-bot no formulário de lista de espera.

@@ -27,13 +27,7 @@ test-results/
 .idea/
 .vscode/
 
-# Firebase
-.firebase/
-firebase-debug.log
 *-debug.log
-# Ephemeral per-run E2E emulator config (scripts/e2e-with-postgres.mjs writes one
-# with a free auth port; cleaned up on exit, ignored in case a crash leaves it).
-.firebase.e2e-*.json
 
 # Project meta
 .claude/local/
