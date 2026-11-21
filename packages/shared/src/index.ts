@@ -1,6 +1,1 @@
 export * from './types/exam'
-export * from './utils/documents'
-export * from './utils/mutability'
-export * from './utils/region'
-export * from './utils/slug'
-export * from './utils/url'

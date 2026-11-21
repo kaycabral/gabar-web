@@ -17,10 +17,8 @@ import {
 } from 'drizzle-orm/pg-core'
 
 /**
- * Postgres (Supabase) schema for gabar. Mirrors the Firestore model in
- * `@gabar/shared/firestore/types.ts`: subcollections become child tables with
- * FKs, and the invariants the Firestore repos enforced in code become native
- * constraints.
+ * Postgres (Supabase) schema for gabar, as read by this front end: child
+ * tables hang off `exams` by FK, and invariants live in native constraints.
  *
  * Every table has RLS enabled with NO policies: the only reader/writer is the
  * server (Postgres role via the Supabase pooler, which bypasses RLS), so the

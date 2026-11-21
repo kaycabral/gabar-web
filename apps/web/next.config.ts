@@ -17,9 +17,8 @@ const commitSha = (() => {
   }
 })()
 
-// Defesa em profundidade. Ver SECURITY.md.
-// Hoje gabar/web é landing pública; sem analytics nem auth wired. Quando trazer
-// Firebase Auth ou GTM, atualizar script-src/connect-src.
+// Defense in depth. The site is public and read-only: no analytics and no auth.
+// The browser only talks to same-origin routes and Cloudflare Turnstile.
 const cspReportOnly = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",

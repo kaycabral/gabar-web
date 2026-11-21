@@ -6,7 +6,7 @@ Modifique `apps/web/`; `packages/shared/` e `packages/db/` só quando o front pr
 
 ## Aliases (cross-workspace)
 
-`@gabar/<pkg>` (resolvido via pnpm workspaces). Ex.: `import type { Profile } from '@gabar/shared'`.
+`@gabar/<pkg>` (resolvido via pnpm workspaces). Ex.: `import type { Exam } from '@gabar/shared'`.
 
 ## shadcn (stile `base-nova`)
 

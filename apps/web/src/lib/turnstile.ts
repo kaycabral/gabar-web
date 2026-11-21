@@ -2,7 +2,7 @@
 //
 // Comportamento opcional:
 // - TURNSTILE_SECRET ausente → verificação skipada (retorna true). Permite dev
-//   local sem conta Cloudflare. Em prod a env var é setada via Secret Manager.
+//   local sem conta Cloudflare. Em produção a env var vem da Vercel.
 // - TURNSTILE_SECRET presente → token obrigatório, validado via API CF.
 
 const VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
