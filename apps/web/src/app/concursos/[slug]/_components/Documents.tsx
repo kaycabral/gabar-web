@@ -48,7 +48,7 @@ function DocumentLink({ doc, examSlug }: { doc: ExamDocument; examSlug: string }
         <span className="truncate">{doc.title}</span>
       </a>
       <div className="flex shrink-0 items-center gap-2">
-        {doc.hasContent && (
+        {doc.hasContent && doc.slug && (
           <Link
             href={`/concursos/${examSlug}/documento/${doc.slug}`}
             className="text-muted-foreground hover:text-foreground flex items-center gap-1 text-xs transition-colors"
