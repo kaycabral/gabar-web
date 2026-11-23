@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: 'Política de privacidade do Gabar.',
 }
 
-const LAST_UPDATED = '2026-11-21'
+const LAST_UPDATED = '2026-11-23'
 const CONTACT_EMAIL = 'privacidade@cbrl.dev'
 
 export default function PrivacidadePage() {
@@ -56,7 +56,7 @@ export default function PrivacidadePage() {
         <p>Apenas com operadores estritamente necessários para a operação do serviço:</p>
         <ul>
           <li>
-            <strong>Vercel</strong>: hospedagem do site.
+            <strong>Vercel</strong>: hospedagem do site e medição anônima de audiência, sem cookies.
           </li>
           <li>
             <strong>Supabase</strong>: banco de dados onde fica o seu e-mail, em servidores em São
@@ -95,9 +95,9 @@ export default function PrivacidadePage() {
 
         <h2>Cookies e tecnologias similares</h2>
         <p>
-          Hoje o Gabar não usa cookies de rastreamento ou ferramentas de analytics. Quando isso
-          mudar, você verá um aviso de consentimento na primeira visita e esta política será
-          atualizada.
+          O Gabar não usa cookies de rastreamento. A medição de audiência é anônima e não usa
+          cookies. Se isso mudar, você verá um aviso de consentimento na primeira visita e esta
+          política será atualizada.
         </p>
 
         <h2>Encarregado de dados (DPO)</h2>
@@ -112,7 +112,10 @@ export default function PrivacidadePage() {
         <h2>Histórico de versões</h2>
         <ul>
           <li>
-            <strong>{LAST_UPDATED}</strong>: versão inicial publicada com o lançamento da lista de
+            <strong>{LAST_UPDATED}</strong>: medição anônima de audiência, sem cookies.
+          </li>
+          <li>
+            <strong>2026-11-21</strong>: versão inicial publicada com o lançamento da lista de
             espera.
           </li>
         </ul>

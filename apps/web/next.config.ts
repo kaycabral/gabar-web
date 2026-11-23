@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
   },
 }
 
-// Defense in depth. The site is public and read-only: no analytics and no auth.
+// Defense in depth. The site is public and read-only, with no auth.
 // The browser only talks to same-origin routes and Cloudflare Turnstile.
 export default withSecurityHeaders(nextConfig, {
   csp: cspDirectives({

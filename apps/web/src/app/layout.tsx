@@ -1,4 +1,5 @@
 import { ThemeProvider, themeInitScript } from '@/components/ThemeProvider'
+import { WebAnalytics } from '@/components/WebAnalytics'
 import { cn } from '@/lib/utils'
 import type { Metadata, Viewport } from 'next'
 import { Bricolage_Grotesque, Geist, Geist_Mono } from 'next/font/google'
@@ -60,6 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
           <Footer />
         </ThemeProvider>
+        {process.env.VERCEL_ENV === 'production' ? <WebAnalytics /> : null}
       </body>
     </html>
   )
