@@ -28,6 +28,7 @@
     "@gabar/db": "workspace:*",
     "@gabar/shared": "workspace:*",
     "@tailwindcss/typography": "catalog:",
+    "@vercel/analytics": "^2.0.1",
     "clsx": "catalog:",
     "lucide-react": "catalog:",
     "next": "16.4.6",
