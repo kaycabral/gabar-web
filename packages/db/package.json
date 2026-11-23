@@ -24,7 +24,7 @@
     "pg": "catalog:"
   },
   "devDependencies": {
-    "@cbrl/tsconfig": "^0.1.0",
+    "@cbrl/tsconfig": "^0.1.1",
     "@types/pg": "catalog:",
     "drizzle-kit": "catalog:",
     "tsx": "catalog:",
