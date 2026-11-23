@@ -42,8 +42,8 @@
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
-    "@cbrl/eslint-config": "^0.2.1",
-    "@cbrl/testing": "^0.3.0",
+    "@cbrl/eslint-config": "^0.3.0",
+    "@cbrl/testing": "^0.4.0",
     "@cbrl/tsconfig": "^0.1.1",
     "@playwright/test": "catalog:",
     "@tailwindcss/postcss": "catalog:",
