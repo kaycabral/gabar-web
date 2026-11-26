@@ -80,11 +80,6 @@
       "count": 3
     }
   },
-  "src/app/concursos/[slug]/_components/Documents.tsx": {
-    "@typescript-eslint/no-unnecessary-type-assertion": {
-      "count": 1
-    }
-  },
   "src/app/concursos/[slug]/_components/Positions.test.tsx": {
     "testing-library/no-node-access": {
       "count": 1
