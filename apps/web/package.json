@@ -47,7 +47,7 @@
     "@cbrl/testing": "^0.4.0",
     "@cbrl/tsconfig": "^0.1.1",
     "@playwright/test": "catalog:",
-    "@tailwindcss/postcss": "catalog:",
+    "@tailwindcss/turbopack": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
     "@testing-library/user-event": "catalog:",
