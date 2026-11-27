@@ -6,6 +6,15 @@ const TURNSTILE_ORIGIN = 'https://challenges.cloudflare.com'
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  // Tailwind through Turbopack's loader, as create-next-app sets it up (no PostCSS).
+  turbopack: {
+    rules: {
+      '*.css': {
+        loaders: ['@tailwindcss/turbopack'],
+        as: '*.css',
+      },
+    },
+  },
   // 127.0.0.1, <hostname>.local and the machine's LAN IPv4s.
   allowedDevOrigins: devOrigins(),
   // Served by /api/health to confirm which commit is live.
