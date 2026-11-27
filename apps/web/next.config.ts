@@ -5,6 +5,7 @@ const TURNSTILE_ORIGIN = 'https://challenges.cloudflare.com'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  partialPrefetching: true,
   // 127.0.0.1, <hostname>.local and the machine's LAN IPv4s.
   allowedDevOrigins: devOrigins(),
   // Served by /api/health to confirm which commit is live.
