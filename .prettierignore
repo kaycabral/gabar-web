@@ -13,3 +13,4 @@ supabase/migrations
 .husky/_/**
 supabase/functions/*/index.ts
 supabase/.temp
+packages/db/contract/web

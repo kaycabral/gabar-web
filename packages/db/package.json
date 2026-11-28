@@ -5,15 +5,12 @@
   "license": "UNLICENSED",
   "type": "module",
   "exports": {
-    "./pg": "./src/pg/index.ts",
-    "./pg/schema": "./src/pg/schema.ts"
+    "./pg": "./src/pg/index.ts"
   },
   "scripts": {
     "typecheck": "tsc",
     "test": "vitest run --passWithNoTests",
     "test:integration:pg": "vitest run --config vitest.pg.config.ts",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
     "db:seed:dev": "tsx scripts/seed-dev.ts"
   },
   "dependencies": {
@@ -26,7 +23,6 @@
   "devDependencies": {
     "@cbrl/tsconfig": "^0.1.1",
     "@types/pg": "catalog:",
-    "drizzle-kit": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

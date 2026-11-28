@@ -1,5 +1,6 @@
+import { sql } from 'drizzle-orm'
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { closeGabarDb, getGabarDb, runGabarMigrations } from './client'
+import { closeGabarDb, getGabarDb, resetWebContract } from './client'
 import {
   findDocumentPage,
   findExamBySlug,
@@ -18,7 +19,6 @@ import {
   listActiveByRegion,
 } from './queries/stats'
 import { joinWaitlist } from './queries/waitlist'
-import { exams, waitlist } from './schema'
 import { seedExam, truncateGabarTables } from './seed'
 
 function pgCode(error: unknown): string | undefined {
@@ -43,7 +43,6 @@ async function seedFixtures() {
       name: 'Concurso TJ-SP Escrevente',
       slug: 'tj-sp-escrevente',
       status: 'open',
-      published: true,
       vacancies: 120,
       salaryLowerBound: 6000,
       scrapedAt: new Date('2026-11-10T12:00:00Z'),
@@ -87,31 +86,15 @@ async function seedFixtures() {
       name: 'Concurso PF Agente',
       slug: 'pf-agente',
       status: 'closed',
-      published: true,
       vacancies: 50,
       salaryLowerBound: 12000,
       scrapedAt: new Date('2026-11-12T12:00:00Z'),
     },
   })
-  await seedExam(db, {
-    exam: { ...base, name: 'Rascunho não publicado', slug: 'rascunho', salaryLowerBound: 99000 },
-    documents: [
-      {
-        title: 'Edital',
-        url: 'https://x/r.pdf',
-        slug: 'edital',
-        content: {
-          markdown: '# Rascunho',
-          extractedAt: new Date('2026-11-02T00:00:00Z'),
-          modelVersion: 'gemini-test',
-        },
-      },
-    ],
-  })
 }
 
 beforeAll(async () => {
-  await runGabarMigrations()
+  await resetWebContract()
 })
 
 beforeEach(async () => {
@@ -124,7 +107,7 @@ afterAll(async () => {
 })
 
 describe('listing', () => {
-  it('returns only published exams, sorted by most recent scrape, with total', async () => {
+  it('returns exams sorted by most recent scrape, with total', async () => {
     const { exams: page, total } = await listPublishedExams({}, 1, 12)
     expect(total).toBe(2)
     expect(page.map((e) => e.slug)).toEqual(['pf-agente', 'tj-sp-escrevente'])
@@ -146,7 +129,7 @@ describe('listing', () => {
     expect(second.exams.map((e) => e.slug)).toEqual(['tj-sp-escrevente'])
   })
 
-  it('lists distinct boards, cities and slugs of published exams only', async () => {
+  it('lists distinct boards, cities and slugs', async () => {
     expect(await listExaminingBoards()).toEqual(['CEBRASPE', 'FGV'])
     expect(await listCities()).toEqual(['Salvador', 'São Paulo'])
     expect((await listPublishedSlugs()).sort()).toEqual(['pf-agente', 'tj-sp-escrevente'])
@@ -199,11 +182,6 @@ describe('detail', () => {
     expect(await findExamBySlug('nope')).toBeUndefined()
   })
 
-  it('does not find an unpublished exam by slug, nor its documents', async () => {
-    expect(await findExamBySlug('rascunho')).toBeUndefined()
-    expect(await findDocumentPage('rascunho', 'edital')).toBeNull()
-  })
-
   it('finds a document whose text lives in Storage', async () => {
     expect(await findDocumentPage('tj-sp-escrevente', 'anexo')).toMatchObject({
       title: 'Anexo',
@@ -227,7 +205,7 @@ describe('detail', () => {
 })
 
 describe('stats', () => {
-  it('counts active (published, not closed) exams by region and board', async () => {
+  it('counts active (not closed) exams by region and board', async () => {
     const byRegion = await countActiveByRegion()
     expect(byRegion.Southeast).toBe(1)
     expect(byRegion.Northeast).toBe(0)
@@ -256,27 +234,12 @@ describe('stats', () => {
   })
 })
 
-describe('constraints', () => {
-  it('rejects publishing an exam without a slug', async () => {
-    const insert = getGabarDb()
-      .insert(exams)
-      .values({ ...base, name: 'Sem slug', published: true })
-    await expect(insert).rejects.toSatisfy((e) => pgCode(e) === '23514')
-  })
-
-  it('rejects a duplicate exam slug', async () => {
-    const insert = getGabarDb()
-      .insert(exams)
-      .values({ ...base, name: 'Dup', slug: 'pf-agente' })
-    await expect(insert).rejects.toSatisfy((e) => pgCode(e) === '23505')
-  })
-})
-
 describe('waitlist', () => {
   it('joins once and reports duplicates', async () => {
     expect(await joinWaitlist('a@b.com')).toBe('joined')
     expect(await joinWaitlist('a@b.com')).toBe('already-joined')
-    expect(await getGabarDb().select().from(waitlist)).toHaveLength(1)
+    const rows = await getGabarDb().execute(sql`select 1 from public.waitlist`)
+    expect(rows.rows).toHaveLength(1)
   })
 
   it('rejects a non-normalized email at the database', async () => {

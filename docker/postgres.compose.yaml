@@ -1,5 +1,6 @@
 # Ephemeral Postgres for local dev and the @gabar/db Postgres integration suite
-# (`pnpm --filter @gabar/web db:start`). No named volume: a fresh `up` starts empty.
+# (`pnpm --filter @gabar/web db:start`). No named volume: a fresh `up` starts with
+# just the `web` contract from the data pipeline (packages/db/contract/web).
 services:
   postgres:
     image: postgres:17-alpine
@@ -9,6 +10,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-gabar}
     ports:
       - '${POSTGRES_PORT:-5432}:5432'
+    volumes:
+      - ../packages/db/contract/web/web.schema.sql:/docker-entrypoint-initdb.d/web.schema.sql:ro
     mem_limit: 1g
     memswap_limit: 1g
     healthcheck:
