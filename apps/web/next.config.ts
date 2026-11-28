@@ -5,6 +5,7 @@ const TURNSTILE_ORIGIN = 'https://challenges.cloudflare.com'
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
+  partialPrefetching: true,
   // Tailwind through Turbopack's loader, as create-next-app sets it up (no PostCSS).
   turbopack: {
     rules: {
