@@ -2,14 +2,14 @@ import { requireEnv } from '@cbrl/env'
 import {
   closeGabarDb,
   getGabarDb,
-  runGabarMigrations,
+  resetWebContract,
   seedExam,
   truncateGabarTables,
 } from '@gabar/db/pg'
 import type { BrazilianRegion, ExamStatus } from '@gabar/shared'
 
 /**
- * Local/E2E fixture data: migrates, wipes and repopulates a LOCAL database with
+ * Local/E2E fixture data: rebuilds the `web` contract, wipes and repopulates a LOCAL database with
  * a handful of exams spread across regions, boards and statuses. Refuses any
  * non-local host so it can never truncate Supabase.
  */
@@ -140,7 +140,7 @@ function daysFromNow(days: number): Date {
 }
 
 async function main(): Promise<void> {
-  await runGabarMigrations()
+  await resetWebContract()
   const db = getGabarDb()
   await truncateGabarTables(db)
 
@@ -155,10 +155,8 @@ async function main(): Promise<void> {
         city: f.city,
         region: f.region,
         status: f.status,
-        published: true,
         vacancies: f.vacancies,
         salaryLowerBound: f.salary,
-        levels: [f.level],
         scrapedAt: daysFromNow(-i),
         registrationStart: daysFromNow(f.daysToClose - 30),
         registrationEnd: daysFromNow(f.daysToClose),

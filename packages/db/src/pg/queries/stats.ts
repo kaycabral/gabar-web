@@ -15,7 +15,7 @@ import {
   type SQL,
 } from 'drizzle-orm'
 import { getGabarDb } from '../client'
-import { exams } from '../schema'
+import { exams } from '../web'
 import { byRegistrationEndDesc, hydrateExams } from './hydrate'
 
 const REGIONS = [
@@ -36,11 +36,8 @@ function emptyByRegion<T>(make: () => T): Record<BrazilianRegion, T> {
   }
 }
 
-/** Published and not closed. A NULL status counts as active. */
-const isActive = and(
-  eq(exams.published, true),
-  or(isNull(exams.status), ne(exams.status, 'closed')),
-)
+/** Not closed (`web` only holds published exams). A NULL status counts as active. */
+const isActive = or(isNull(exams.status), ne(exams.status, 'closed'))
 
 export async function countActiveByRegion(): Promise<Record<BrazilianRegion, number>> {
   const rows = await getGabarDb()
@@ -122,7 +119,6 @@ export async function getExamTotals(): Promise<ExamTotals> {
       lastSyncAt: max(exams.scrapedAt),
     })
     .from(exams)
-    .where(eq(exams.published, true))
   const row = rows[0]
   return {
     totalExams: row?.totalExams ?? 0,
@@ -137,7 +133,7 @@ export async function getMaxSalaryLowerBound(): Promise<number | null> {
   const rows = await getGabarDb()
     .select({ salary: exams.salaryLowerBound })
     .from(exams)
-    .where(and(eq(exams.published, true), isNotNull(exams.salaryLowerBound)))
+    .where(isNotNull(exams.salaryLowerBound))
     .orderBy(desc(exams.salaryLowerBound))
     .limit(1)
   return rows[0]?.salary ?? null

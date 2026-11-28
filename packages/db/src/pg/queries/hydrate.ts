@@ -1,7 +1,7 @@
 import type { Exam, ExamDocument, ExamPosition } from '@gabar/shared'
 import { asc, inArray, sql } from 'drizzle-orm'
 import type { GabarDb } from '../client'
-import { documentContents, examDocuments, examPositions, exams } from '../schema'
+import { documentContents, examDocuments, examPositions, exams } from '../web'
 
 export type ExamRow = typeof exams.$inferSelect
 

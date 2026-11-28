@@ -14,7 +14,7 @@ import {
   type SQL,
 } from 'drizzle-orm'
 import { getGabarDb } from '../client'
-import { documentContents, examDocuments, exams } from '../schema'
+import { documentContents, examDocuments, exams } from '../web'
 import { byRegistrationEndDesc, hasText, hydrateExams } from './hydrate'
 
 export type ExamListSort = 'recent' | 'salary' | 'deadline'
@@ -48,7 +48,7 @@ function escapeLike(value: string): string {
 }
 
 function listConditions(filters: ExamListFilters): SQL[] {
-  const conditions: SQL[] = [eq(exams.published, true)]
+  const conditions: SQL[] = []
   if (filters.search) conditions.push(ilike(exams.name, `%${escapeLike(filters.search)}%`))
   if (filters.status) conditions.push(eq(exams.status, filters.status))
   if (filters.examiningBoard) conditions.push(eq(exams.examiningBoard, filters.examiningBoard))
@@ -98,7 +98,7 @@ async function distinctPublished(column: typeof exams.examiningBoard | typeof ex
   const rows = await getGabarDb()
     .selectDistinct({ value: column })
     .from(exams)
-    .where(and(eq(exams.published, true), isNotNull(column)))
+    .where(isNotNull(column))
     .orderBy(asc(column))
   return rows.flatMap((r) => (r.value ? [r.value] : []))
 }
@@ -115,18 +115,14 @@ export async function listPublishedSlugs(): Promise<string[]> {
   const rows = await getGabarDb()
     .select({ slug: exams.slug })
     .from(exams)
-    .where(and(eq(exams.published, true), isNotNull(exams.slug)))
+    .where(isNotNull(exams.slug))
   return rows.flatMap((r) => (r.slug ? [r.slug] : []))
 }
 
 /** A published exam by slug; unpublished exams are not found. */
 export async function findExamBySlug(slug: string): Promise<Exam | undefined> {
   const db = getGabarDb()
-  const rows = await db
-    .select()
-    .from(exams)
-    .where(and(eq(exams.slug, slug), eq(exams.published, true)))
-    .limit(1)
+  const rows = await db.select().from(exams).where(eq(exams.slug, slug)).limit(1)
   const [exam] = await hydrateExams(db, rows)
   return exam
 }
@@ -148,14 +144,7 @@ export async function findDocumentPage(
     .from(examDocuments)
     .innerJoin(exams, eq(exams.id, examDocuments.examId))
     .innerJoin(documentContents, eq(documentContents.documentId, examDocuments.id))
-    .where(
-      and(
-        eq(exams.slug, examSlug),
-        eq(exams.published, true),
-        eq(examDocuments.slug, documentSlug),
-        hasText,
-      ),
-    )
+    .where(and(eq(exams.slug, examSlug), eq(examDocuments.slug, documentSlug), hasText))
     .limit(1)
   const row = rows[0]
   if (!row) return null
@@ -178,7 +167,7 @@ export async function listSitemapEntries(): Promise<SitemapEntries> {
     db
       .select({ slug: exams.slug, lastModified: examLastModified })
       .from(exams)
-      .where(and(eq(exams.published, true), isNotNull(exams.slug)))
+      .where(isNotNull(exams.slug))
       .orderBy(asc(exams.slug)),
     db
       .select({
@@ -189,14 +178,7 @@ export async function listSitemapEntries(): Promise<SitemapEntries> {
       .from(examDocuments)
       .innerJoin(exams, eq(exams.id, examDocuments.examId))
       .innerJoin(documentContents, eq(documentContents.documentId, examDocuments.id))
-      .where(
-        and(
-          eq(exams.published, true),
-          isNotNull(exams.slug),
-          isNotNull(examDocuments.slug),
-          hasText,
-        ),
-      )
+      .where(and(isNotNull(exams.slug), isNotNull(examDocuments.slug), hasText))
       .orderBy(asc(exams.slug), asc(examDocuments.slug)),
   ])
   return {

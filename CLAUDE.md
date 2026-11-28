@@ -16,5 +16,5 @@ Cada workspace (`apps/web`, `packages/*`) tem `CLAUDE.md` próprio — abra ante
 
 ## Não-óbvio
 
-- **Só leitura de dados**: o front lê concursos publicados do Postgres; escrita, schema e migrations têm dono no pipeline privado. `packages/db` mantém uma cópia do schema pra tipar as queries.
+- **Só leitura de dados**: o front lê concursos publicados do Postgres; escrita, schema e migrations têm dono no pipeline privado. O site só enxerga o schema `web` (views + `web.join_waitlist`), cujo contrato gerado vive em `packages/db/contract/web/` e chega por PR automático do pipeline.
 - **Deploy**: Vercel (Root Directory `apps/web`). Env nova de build/runtime precisa entrar em `apps/web/turbo.json`.
