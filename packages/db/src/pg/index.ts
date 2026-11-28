@@ -7,9 +7,11 @@ export {
   listExaminingBoards,
   listPublishedExams,
   listPublishedSlugs,
+  listSitemapEntries,
   type DocumentPage,
   type ExamListFilters,
   type ExamListSort,
+  type SitemapEntries,
 } from './queries/exams'
 export {
   countActiveByBoard,

@@ -7,6 +7,7 @@ import {
   listExaminingBoards,
   listPublishedExams,
   listPublishedSlugs,
+  listSitemapEntries,
 } from './queries/exams'
 import {
   countActiveByBoard,
@@ -149,6 +150,26 @@ describe('listing', () => {
     expect(await listExaminingBoards()).toEqual(['CEBRASPE', 'FGV'])
     expect(await listCities()).toEqual(['Salvador', 'São Paulo'])
     expect((await listPublishedSlugs()).sort()).toEqual(['pf-agente', 'tj-sp-escrevente'])
+  })
+})
+
+describe('sitemap', () => {
+  it('lists published exams and their documents with text only', async () => {
+    const { exams: examEntries, documents } = await listSitemapEntries()
+    expect(examEntries.map((e) => e.slug)).toEqual(['pf-agente', 'tj-sp-escrevente'])
+    expect(examEntries[0]?.lastModified).toEqual(new Date('2026-11-12T12:00:00Z'))
+    expect(documents).toEqual([
+      {
+        examSlug: 'tj-sp-escrevente',
+        slug: 'anexo',
+        lastModified: new Date('2026-11-03T00:00:00Z'),
+      },
+      {
+        examSlug: 'tj-sp-escrevente',
+        slug: 'edital',
+        lastModified: new Date('2026-11-02T00:00:00Z'),
+      },
+    ])
   })
 })
 

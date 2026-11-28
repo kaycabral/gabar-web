@@ -1,3 +1,4 @@
+import { SITE_URL } from '@/lib/constants'
 import { getDocumentBySlug, getExamBySlug } from '@/lib/exams-api'
 import { Skeleton } from '@cbrl/design'
 import { AlertTriangleIcon, ChevronLeftIcon } from 'lucide-react'
@@ -21,13 +22,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     getDocumentBySlug(slug, documentSlug),
   ])
   if (!exam || !doc) return {}
+  const url = `${SITE_URL}/concursos/${slug}/documento/${documentSlug}`
   return {
     title: `${doc.title} — ${exam.name}`,
     description: `${doc.title} do concurso ${exam.name} (${exam.examiningBoard})`,
+    alternates: { canonical: url },
     openGraph: {
       title: `${doc.title} — ${exam.name}`,
       description: `${doc.title} do concurso ${exam.name} (${exam.examiningBoard})`,
-      url: `https://gabar.com.br/concursos/${slug}/documento/${documentSlug}`,
+      url,
       siteName: 'Gabar',
       locale: 'pt_BR',
       type: 'article',

@@ -23,6 +23,8 @@ const VALID_SORTS: readonly ExamSort[] = ['recent', 'salary', 'deadline'] as con
 export const metadata: Metadata = {
   title: 'Concursos',
   description: 'Lista de concursos públicos.',
+  // Filters and pagination live in the query string; index the bare listing.
+  alternates: { canonical: '/concursos' },
 }
 
 interface PageProps {
