@@ -1,4 +1,6 @@
 import StatusBadge from '@/components/StatusBadge'
+import { SITE_URL } from '@/lib/constants'
+import { examDescription } from '@/lib/exam-description'
 import { getAllExamSlugs, getExamBySlug } from '@/lib/exams-api'
 import { Skeleton } from '@cbrl/design'
 import { ChevronLeft } from 'lucide-react'
@@ -29,13 +31,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const exam = await getExamBySlug(slug)
   if (!exam) return {}
+  const description = examDescription(exam)
+  const url = `${SITE_URL}/concursos/${slug}`
   return {
     title: exam.name,
-    description: `${exam.positions?.map((p) => p.title).join(', ') || 'Concurso'} | ${exam.vacancies ?? '?'} vagas | ${exam.examiningBoard}`,
+    description,
+    alternates: { canonical: url },
     openGraph: {
       title: exam.name,
-      description: `${exam.positions?.map((p) => p.title).join(', ') || 'Concurso'} | ${exam.vacancies ?? '?'} vagas | ${exam.examiningBoard}`,
-      url: `https://gabar.com.br/concursos/${slug}`,
+      description,
+      url,
       siteName: 'Gabar',
       locale: 'pt_BR',
       type: 'website',

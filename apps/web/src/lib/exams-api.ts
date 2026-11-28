@@ -7,6 +7,8 @@ import {
   listExaminingBoards,
   listPublishedExams,
   listPublishedSlugs,
+  listSitemapEntries,
+  type SitemapEntries,
 } from './db'
 import { readDocumentText } from './document-text'
 import { PAGE_SIZE, type DocumentPageData, type ExamFilters } from './exam-shared'
@@ -43,6 +45,12 @@ export async function getAllExamSlugs(): Promise<string[]> {
   'use cache'
   cacheLife('days')
   return listPublishedSlugs()
+}
+
+export async function getSitemapEntries(): Promise<SitemapEntries> {
+  'use cache'
+  cacheLife('hours')
+  return listSitemapEntries()
 }
 
 export async function getExamBySlug(slug: string): Promise<Exam | undefined> {

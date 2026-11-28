@@ -161,3 +161,52 @@ export async function findDocumentPage(
   if (!row) return null
   return { ...row, extractedAt: row.extractedAt.toISOString() }
 }
+
+export interface SitemapEntries {
+  exams: { slug: string; lastModified: Date }[]
+  documents: { examSlug: string; slug: string; lastModified: Date }[]
+}
+
+/**
+ * URLs worth indexing: every published exam, and each of its documents that
+ * has text to render (the document page 404s otherwise).
+ */
+export async function listSitemapEntries(): Promise<SitemapEntries> {
+  const db = getGabarDb()
+  const examLastModified = sql<string>`coalesce(greatest(${exams.scrapedAt}, ${exams.enrichedAt}), ${exams.createdAt})`
+  const [examRows, documentRows] = await Promise.all([
+    db
+      .select({ slug: exams.slug, lastModified: examLastModified })
+      .from(exams)
+      .where(and(eq(exams.published, true), isNotNull(exams.slug)))
+      .orderBy(asc(exams.slug)),
+    db
+      .select({
+        examSlug: exams.slug,
+        slug: examDocuments.slug,
+        lastModified: documentContents.extractedAt,
+      })
+      .from(examDocuments)
+      .innerJoin(exams, eq(exams.id, examDocuments.examId))
+      .innerJoin(documentContents, eq(documentContents.documentId, examDocuments.id))
+      .where(
+        and(
+          eq(exams.published, true),
+          isNotNull(exams.slug),
+          isNotNull(examDocuments.slug),
+          hasText,
+        ),
+      )
+      .orderBy(asc(exams.slug), asc(examDocuments.slug)),
+  ])
+  return {
+    exams: examRows.flatMap((r) =>
+      r.slug ? [{ slug: r.slug, lastModified: new Date(r.lastModified) }] : [],
+    ),
+    documents: documentRows.flatMap((r) =>
+      r.examSlug && r.slug
+        ? [{ examSlug: r.examSlug, slug: r.slug, lastModified: r.lastModified }]
+        : [],
+    ),
+  }
+}
